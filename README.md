@@ -145,7 +145,7 @@ var wioClient = require('node-wio-link')(serverLocation)
 
 (async function() {
   try {
-    var airQuality = wioClient.node.read(nodeToken, 'GroveAirqualityA0', 'quality');
+    var airQuality = await wioClient.node.read(nodeToken, 'GroveAirqualityA0', 'quality');
     console.log(airQuality);
   } catch (error) {
     console.log(error);

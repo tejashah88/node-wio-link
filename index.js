@@ -29,7 +29,7 @@ function WioLinkClient(serverLocation) {
         }
       )
       .then(response => response.data)
-      .catch(response => Promise.reject(response.response));
+      .catch(response => Promise.reject(response.response.data));
     },
     post: function(token, url, data) {
       return this.client.post(
@@ -40,7 +40,7 @@ function WioLinkClient(serverLocation) {
         }
       )
       .then(response => response.data)
-      .catch(response => Promise.reject(response.response));
+      .catch(response => Promise.reject(response.response.data));
     }
   };
 
