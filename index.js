@@ -69,8 +69,8 @@ function WioLinkClient(serverLocation) {
 
   clientLib.node = {
     wellKnown: (nodeToken) => rest.get(nodeToken, 'node/.well-known'),
-    read: (nodeToken, groveInstName, property) => rest.get(nodeToken, `node/${groveInstName}/${property}/${arguments.splice(3).join('/')}`),
-    write: (nodeToken, groveInstName, PMA) => rest.post(nodeToken, `node/${groveInstName}/${PMA}/${arguments.splice(3).join('/')}`),
+    read: (nodeToken, groveInstName, property) => rest.get(nodeToken, `node/${groveInstName}/${property}/${Object.values(arguments).splice(3).join('/')}`),
+    write: (nodeToken, groveInstName, PMA) => rest.post(nodeToken, `node/${groveInstName}/${PMA}/${Object.values(arguments).splice(3).join('/')}`),
     sleep: (nodeToken, sleepAmount) => rest.post(nodeToken, `node/pm/sleep/${sleepAmount}`),
     resources: (nodeToken) => rest.get(nodeToken, 'node/resources'),
     otaTrigger: (nodeToken, data, buildPhase) => rest.post(nodeToken, 'ota/trigger' + (buildPhase ? '?build_phase=' + buildPhase : ''), data),
