@@ -1,4 +1,6 @@
 # node-wio-link
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/tejashah88/node-wio-link.svg)](https://greenkeeper.io/)
 A node.js client library for using the Wio Link API.
 
 ## Table Of Contents
