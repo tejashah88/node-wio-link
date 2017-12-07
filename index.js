@@ -13,34 +13,30 @@ function WioLinkClient(serverLocation) {
       throw new Error(`Invalid server location: "${serverLocation}"`);
   }
 
+  function configureHeaders(token, usingUrlEncoded) {
+    var headers = {};
+    if (token)
+      headers['Authorization'] = 'token ' + token;
+    headers['Content-Type'] = 'application/' + (usingUrlEncoded ? 'x-www-form-urlencoded' : 'json');
+    return headers;
+  }
+
   var rest = {
     client: axios.create({
       baseURL: `https://${serverLocation}.wio.seeed.io/v1/`,
       headers: {
-        'Content-Type': 'application/json; charset=utf-8',
         'Accept': 'application/json'
       }
     }),
-    get: function(token, url) {
-      return this.client.get(
-        url,
-        {
-          headers: (token) ? { 'Authorization': 'token ' + token } : undefined
-        }
-      )
-      .then(response => response.data)
-      .catch(response => Promise.reject(response.response.data));
+    get: function(token, url, usingUrlEncoded) {
+      return this.client.get(url, { headers: configureHeaders(token, usingUrlEncoded) })
+        .then(response => response.data)
+        .catch(response => Promise.reject(response.response.data));
     },
-    post: function(token, url, data) {
-      return this.client.post(
-        url,
-        data !== undefined ? data : {},
-        {
-          headers: (token) ? { 'Authorization': 'token ' + token } : undefined
-        }
-      )
-      .then(response => response.data)
-      .catch(response => Promise.reject(response.response.data));
+    post: function(token, url, data, usingUrlEncoded) {
+      return this.client.post(url, data !== undefined ? data : {}, { headers: configureHeaders(token, usingUrlEncoded) })
+        .then(response => response.data)
+        .catch(response => Promise.reject(response.response.data));
     }
   };
 
@@ -69,8 +65,8 @@ function WioLinkClient(serverLocation) {
 
   clientLib.node = {
     wellKnown: (nodeToken) => rest.get(nodeToken, 'node/.well-known'),
-    read: (nodeToken, groveInstName, property) => rest.get(nodeToken, `node/${groveInstName}/${property}/${Object.values(arguments).splice(3).join('/')}`),
-    write: (nodeToken, groveInstName, PMA) => rest.post(nodeToken, `node/${groveInstName}/${PMA}/${Object.values(arguments).splice(3).join('/')}`),
+    read: (nodeToken, groveInstName, property, ...args) => rest.get(nodeToken, `node/${groveInstName}/${property}/${args.join('/')}`, true),
+    write: (nodeToken, groveInstName, PMA, ...args) => rest.post(nodeToken, `node/${groveInstName}/${PMA}/${args.join('/')}`, undefined, true),
     sleep: (nodeToken, sleepAmount) => rest.post(nodeToken, `node/pm/sleep/${sleepAmount}`),
     resources: (nodeToken) => rest.get(nodeToken, 'node/resources'),
     otaTrigger: (nodeToken, data, buildPhase) => rest.post(nodeToken, 'ota/trigger' + (buildPhase ? '?build_phase=' + buildPhase : ''), data),
