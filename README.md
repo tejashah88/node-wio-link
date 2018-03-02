@@ -14,7 +14,6 @@ A node.js client library for using the Wio Link API.
     * [Using Promises (normal functions)](#using-promises-normal-functions)
     * [Using Promises (arrow functions)](#using-promises-arrow-functions)
     * [Using Async/Await](#using-asyncawait)
-* [TODO](#todo)
 
 ## Documentation
 Official Documentation: http://seeed-studio.github.io/Wio_Link/
@@ -153,6 +152,3 @@ var wioClient = require('node-wio-link')(serverLocation)
   }
 })();
 ```
-
-## TODO
-* add unit testing
