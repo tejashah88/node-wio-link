@@ -1,9 +1,9 @@
 'use strict';
 
-var axios = require('axios');
+const axios = require('axios');
 
 function WioLinkClient(serverLocation) {
-  var clientLib = {};
+  const clientLib = {};
 
   if (!serverLocation)
     serverLocation = 'us';
@@ -14,14 +14,14 @@ function WioLinkClient(serverLocation) {
   }
 
   function configureHeaders(token, usingUrlEncoded) {
-    var headers = {};
+    const headers = {};
     if (token)
       headers['Authorization'] = 'token ' + token;
     headers['Content-Type'] = 'application/' + (usingUrlEncoded ? 'x-www-form-urlencoded' : 'json');
     return headers;
   }
 
-  var rest = {
+  const rest = {
     client: axios.create({
       baseURL: `https://${serverLocation}.wio.seeed.io/v1/`,
       headers: {
@@ -45,23 +45,23 @@ function WioLinkClient(serverLocation) {
     changePassword: (userToken, newPassword) => rest.post(userToken, 'user/changepassword', { password: newPassword }),
     retrievePassword: (email) => rest.post(null, 'user/retrievepassword', { email }),
     login: (email, password) => rest.post(null, 'user/login', { email, password })
-  }
+  };
 
   clientLib.nodeManagement = {
     create: (userToken, name, boardType) => rest.post(userToken, 'nodes/create', { name, board: boardType }),
     list: (userToken) => rest.get(userToken, 'nodes/list'),
     rename: (userToken, newName, nodeSN) => rest.post(userToken, 'nodes/rename', { name: newName, node_sn: nodeSN }),
     delete: (userToken, nodeSN) => rest.post(userToken, 'nodes/delete', { node_sn: nodeSN })
-  }
+  };
 
   clientLib.groveDriver = {
     info: (userToken) => rest.get(userToken, 'scan/drivers'),
     scanStatus: (userToken) => rest.get(userToken, 'scan/status')
-  }
+  };
 
   clientLib.boards = {
     list: (userToken) => rest.get(userToken, 'boards/list')
-  }
+  };
 
   clientLib.node = {
     wellKnown: (nodeToken) => rest.get(nodeToken, 'node/.well-known'),
@@ -73,7 +73,7 @@ function WioLinkClient(serverLocation) {
     otaStatus: (nodeToken) => rest.get(nodeToken, 'ota/status'),
     config: (nodeToken) => rest.get(nodeToken, 'node/config'),
     changeDataExchangeServer: (nodeToken, address, dataxurl) => rest.post(nodeToken, `node/setting/dataxserver/${address}`, { dataxurl })
-  }
+  };
 
   clientLib.cotf = {
     uploadULB: (nodeToken, data) => rest.post(nodeToken, 'cotf/project', data),
@@ -81,7 +81,15 @@ function WioLinkClient(serverLocation) {
     getVariable: (nodeToken, varName) => rest.get(nodeToken, `node/variable/${varName}`),
     setVariable: (nodeToken, varName, varValue) => rest.post(nodeToken, `node/variable/${varName}/${varValue}`),
     callFunction: (nodeToken, funcName, arg) => rest.post(nodeToken, `node/function/${funcName}`, { arg })
-  }
+  };
+
+  clientLib.custom = {
+    head: url => rest.head(url),
+    get: (url, parameters) => rest.get(url, parameters),
+    post: (url, parameters) => rest.post(url, parameters),
+    put: (url, parameters) => rest.put(url, parameters),
+    delete: url => rest.delete(url)
+  };
 
   return clientLib;
 }
