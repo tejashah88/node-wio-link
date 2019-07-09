@@ -1,22 +1,24 @@
 # node-wio-link
 
-[![NPM Version](https://img.shields.io/npm/v/node-alexa-smapi.svg)](https://www.npmjs.com/package/node-alexa-smapi)
+[![NPM Version](https://img.shields.io/npm/v/node-wio-link.svg)](https://www.npmjs.com/package/node-wio-link)
 
 A node.js client library for using the Wio Link API.
 
 ## Table Of Contents
 
-* [Documentation](#documentation)
-  * [User Management](#user-management)
-  * [Node Management](#node-management)
-  * [Grove Driver](#grove-driver)
-  * [Boards/Platform](#boardsplatform)
-  * [Single Node](#single-node)
-  * [Coding on the fly](#coding-on-the-fly)
-  * [Custom API calls](#custom-api-calls)
-* [Examples](#examples)
-  * [Using Promises](#using-promises)
-  * [Using Async/Await](#using-asyncawait)
+* [node-wio-link](#node-wio-link)
+  * [Table Of Contents](#Table-Of-Contents)
+  * [Documentation](#Documentation)
+    * [User Management](#User-Management)
+    * [Node Management](#Node-Management)
+    * [Grove Driver](#Grove-Driver)
+    * [Boards/Platform](#BoardsPlatform)
+    * [Single Node](#Single-Node)
+    * [Coding on the fly](#Coding-on-the-fly)
+    * [Custom API calls](#Custom-API-calls)
+  * [Examples](#Examples)
+    * [Using Promises](#Using-Promises)
+    * [Using Async/Await](#Using-AsyncAwait)
 
 ## Documentation
 Official Documentation: http://seeed-studio.github.io/Wio_Link/
@@ -139,7 +141,7 @@ wioClient.custom.delete(String url)
 ```
 
 ## Examples
-### Using Promises (arrow functions)
+### Using Promises
 ```javascript
 // serverLocation can be 'us' or 'cn'
 const wioClient = require('node-wio-link')(serverLocation);

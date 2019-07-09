@@ -18,14 +18,14 @@
     ],
     "require-await": "error",
     "indent": [
-      "error",
+      "warn",
       2,
       {
         "SwitchCase": 1
       }
     ],
     "quotes": [
-      "error",
+      "warn",
       "single",
       {
         "avoidEscape": true,
@@ -38,6 +38,10 @@
     ],
     "no-console": "off",
     "no-unused-vars": "warn",
-    "no-var": "error"
+    "no-var": "error",
+    "linebreak-style": [
+      "warn",
+      "unix"
+    ]
   }
 }
